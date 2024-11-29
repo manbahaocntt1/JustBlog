@@ -1,5 +1,7 @@
 ﻿using BasedProject.Models.BaseEntities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BasedProject.DataAccess
 {
@@ -26,9 +28,14 @@ namespace BasedProject.DataAccess
 
             // Seed data for Tags
             modelBuilder.Entity<Tag>().HasData(
-                new Tag { Id = csharpTagId, TagName = "C#", TagUrlSlug = "csharp" },
-                new Tag { Id = efCoreTagId, TagName = "EF Core", TagUrlSlug = "ef-core" },
-                new Tag { Id = aspnetTagId, TagName = "ASP.NET", TagUrlSlug = "aspnet" }
+                new Tag { Id = csharpTagId, TagName = "C#", TagUrlSlug = "csharp",UsageCount = 250 },
+                new Tag { Id = efCoreTagId, TagName = "EF Core", TagUrlSlug = "ef-core", UsageCount = 270 },
+                new Tag { Id = aspnetTagId, TagName = "ASP.NET", TagUrlSlug = "aspnet", UsageCount = 240 },
+                 new Tag { Id = Guid.NewGuid(), TagName = "Technology", TagUrlSlug = "technology", UsageCount = 150 },
+        new Tag { Id = Guid.NewGuid(), TagName = "Programming", TagUrlSlug = "programming", UsageCount = 120 },
+        new Tag { Id = Guid.NewGuid(), TagName = "C#", TagUrlSlug = "c-sharp", UsageCount = 100 },
+        new Tag { Id = Guid.NewGuid(), TagName = "ASP.NET", TagUrlSlug = "asp-net", UsageCount = 80 },
+        new Tag { Id = Guid.NewGuid(), TagName = "Web Development", TagUrlSlug = "web-development", UsageCount = 70 }
             );
 
             // Define fixed GUIDs for posts
@@ -85,6 +92,29 @@ namespace BasedProject.DataAccess
                     new { PostsId = post3Id, TagsId = aspnetTagId }
                 ));
         }
+        public static async Task SeedAdminUser(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var adminEmail = "admin@example.com";
+            var adminPassword = "Admin@1234";
+            var fullName = "HaoMB";
+
+            // Ensure the Admin role exists
+            if (!await roleManager.RoleExistsAsync("Admin"))
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+
+            // Create Admin user
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                adminUser = new User { UserName = adminEmail, Email = adminEmail, FullName=fullName };
+                await userManager.CreateAsync(adminUser, adminPassword );
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+        }
+
     }
 
 }

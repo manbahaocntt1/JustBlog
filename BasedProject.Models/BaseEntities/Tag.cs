@@ -16,6 +16,8 @@ namespace BasedProject.Models.BaseEntities
         [StringLength(1024)]
         public string TagUrlSlug { get; set; }
 
+        public int? UsageCount { get; set; }    
+
         // Navigation property to Post
         public virtual IList<Post> Posts { get; set; } = new List<Post>();
     }

@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasedProject.BusinessLogic"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasedProject.WebMVC", "BasedProject.WebMVC\BasedProject.WebMVC.csproj", "{B3CA5B31-7D7B-42BC-91C8-3FF48420E68F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "guidTester", "guidTester\guidTester.csproj", "{CAA311C1-FF73-4261-BD1E-F075620883AE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{B3CA5B31-7D7B-42BC-91C8-3FF48420E68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3CA5B31-7D7B-42BC-91C8-3FF48420E68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3CA5B31-7D7B-42BC-91C8-3FF48420E68F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAA311C1-FF73-4261-BD1E-F075620883AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAA311C1-FF73-4261-BD1E-F075620883AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAA311C1-FF73-4261-BD1E-F075620883AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAA311C1-FF73-4261-BD1E-F075620883AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

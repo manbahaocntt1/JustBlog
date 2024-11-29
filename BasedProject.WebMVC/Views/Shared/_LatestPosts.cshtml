@@ -1,0 +1,29 @@
+﻿@model IEnumerable<BasedProject.Models.BaseEntities.Post>
+
+<!-- Main Content -->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            @foreach (var post in Model)
+            {
+                <!-- Post preview -->
+                <div class="post-preview">
+                    <a href="@Url.Action("Details", "Post", new { id = post.Id })">
+                        <h2 class="post-title">@post.Title</h2>
+                        @if (!string.IsNullOrEmpty(post.ShortDescription))
+                        {
+                            <h3 class="post-subtitle">@post.ShortDescription</h3>
+                        }
+                    </a>
+                    <p class="post-meta">
+                        Posted by
+                        <a href="#!">Author Placeholder</a>
+                        on @post.PostedOn.ToString("MMMM dd, yyyy")
+                    </p>
+                </div>
+                <!-- Divider -->
+                <hr class="my-4" />
+            }
+        </div>
+    </div>
+</div>

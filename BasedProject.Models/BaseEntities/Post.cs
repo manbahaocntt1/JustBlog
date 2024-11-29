@@ -25,11 +25,20 @@ namespace BasedProject.Models.BaseEntities
         public bool Published { get; set; }
         public DateTime PostedOn { get; set; }
 
+        // New fields
+        public int ViewCount { get; set; }
+        public int RateCount { get; set; }
+        public int TotalRate { get; set; }
+        public decimal Rate => RateCount == 0 ? 0 : (decimal)TotalRate / RateCount;
+
         // Foreign key to Category
         public Guid CategoryId { get; set; }
         public virtual Category ?Category { get; set; }
 
         // Navigation property to Tag
         public virtual IList<Tag> Tags { get; set; } = new List<Tag>();
+        // Navigation property to Comment
+        public virtual IList<Comment> Comments { get; set; } = new List<Comment>();
+
     }
 }
