@@ -1,0 +1,15 @@
+﻿@model IList<BasedProject.Models.BaseEntities.Category>
+
+<div class="categories">
+    <h3>Categories</h3>
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li>
+                <a href="@Url.Action("PostsByCategory", "Post", new { category = category.CategoryName })">
+                    @category.CategoryName
+                </a>
+            </li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,45 @@
+﻿@model BasedProject.Models.BaseEntities.Post
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<header class="masthead" style="background-image: url('/assets/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>@Model.Title</h1>
+                    <h2 class="subheading">@Model.ShortDescription</h2>
+                    <span class="meta">
+                        Posted on @Model.PostedOn.ToString("MMMM dd, yyyy")
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @Html.Raw(Model.PostContent)
+
+                <!-- Additional Post Details -->
+                <div class="mt-4">
+                    <span class="badge bg-info text-dark">Views: @Model.ViewCount</span>
+                    <span class="badge bg-success">Rating: @Model.Rate.ToString("F1")</span>
+                    <div class="mt-2">
+                        <strong>Tags:</strong>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <span class="badge bg-secondary">@tag.TagName</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

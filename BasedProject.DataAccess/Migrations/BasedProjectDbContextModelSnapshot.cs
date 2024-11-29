@@ -71,6 +71,44 @@ namespace BasedProject.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BasedProject.Models.BaseEntities.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CommentHeader")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<DateTime>("CommentTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("BasedProject.Models.BaseEntities.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -96,6 +134,9 @@ namespace BasedProject.DataAccess.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("bit");
 
+                    b.Property<int>("RateCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -105,6 +146,12 @@ namespace BasedProject.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("TotalRate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -119,10 +166,13 @@ namespace BasedProject.DataAccess.Migrations
                             CategoryId = new Guid("bc91bb55-c0f2-4012-a0a7-8b5a5ed626c9"),
                             PostContent = "ASP.NET is a powerful framework...",
                             PostUrlSlug = "getting-started-aspnet",
-                            PostedOn = new DateTime(2024, 11, 18, 6, 53, 39, 916, DateTimeKind.Utc).AddTicks(8191),
+                            PostedOn = new DateTime(2024, 11, 29, 5, 37, 0, 293, DateTimeKind.Utc).AddTicks(1345),
                             Published = true,
+                            RateCount = 0,
                             ShortDescription = "A guide to ASP.NET for beginners",
-                            Title = "Getting Started with ASP.NET"
+                            Title = "Getting Started with ASP.NET",
+                            TotalRate = 0,
+                            ViewCount = 0
                         },
                         new
                         {
@@ -130,10 +180,13 @@ namespace BasedProject.DataAccess.Migrations
                             CategoryId = new Guid("c1a50d85-b239-4281-9de1-4fb911d525cf"),
                             PostContent = "Living a healthy life involves...",
                             PostUrlSlug = "healthy-living-tips",
-                            PostedOn = new DateTime(2024, 11, 18, 6, 53, 39, 916, DateTimeKind.Utc).AddTicks(8223),
+                            PostedOn = new DateTime(2024, 11, 29, 5, 37, 0, 293, DateTimeKind.Utc).AddTicks(1348),
                             Published = true,
+                            RateCount = 0,
                             ShortDescription = "Tips for a healthy lifestyle",
-                            Title = "Healthy Living Tips"
+                            Title = "Healthy Living Tips",
+                            TotalRate = 0,
+                            ViewCount = 0
                         },
                         new
                         {
@@ -141,10 +194,13 @@ namespace BasedProject.DataAccess.Migrations
                             CategoryId = new Guid("4bc46f19-70f8-47b9-99c8-045ecdc99da2"),
                             PostContent = "From beaches to mountains, explore...",
                             PostUrlSlug = "top-travel-destinations",
-                            PostedOn = new DateTime(2024, 11, 18, 6, 53, 39, 916, DateTimeKind.Utc).AddTicks(8224),
+                            PostedOn = new DateTime(2024, 11, 29, 5, 37, 0, 293, DateTimeKind.Utc).AddTicks(1350),
                             Published = true,
+                            RateCount = 0,
                             ShortDescription = "The best places to visit this year",
-                            Title = "Top 10 Travel Destinations"
+                            Title = "Top 10 Travel Destinations",
+                            TotalRate = 0,
+                            ViewCount = 0
                         });
                 });
 
@@ -164,6 +220,9 @@ namespace BasedProject.DataAccess.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
+                    b.Property<int?>("UsageCount")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
@@ -173,20 +232,263 @@ namespace BasedProject.DataAccess.Migrations
                         {
                             Id = new Guid("e5f20ab3-bf82-482a-a977-6a5c2bbff803"),
                             TagName = "C#",
-                            TagUrlSlug = "csharp"
+                            TagUrlSlug = "csharp",
+                            UsageCount = 250
                         },
                         new
                         {
                             Id = new Guid("c68f7b7d-1dd5-431e-98d1-9eae2e1b8d54"),
                             TagName = "EF Core",
-                            TagUrlSlug = "ef-core"
+                            TagUrlSlug = "ef-core",
+                            UsageCount = 270
                         },
                         new
                         {
                             Id = new Guid("b7ad3e42-815f-421c-b3b8-4f7a7b94622e"),
                             TagName = "ASP.NET",
-                            TagUrlSlug = "aspnet"
+                            TagUrlSlug = "aspnet",
+                            UsageCount = 240
+                        },
+                        new
+                        {
+                            Id = new Guid("bd999bd2-fd28-4df4-9bf3-56717c3a678c"),
+                            TagName = "Technology",
+                            TagUrlSlug = "technology",
+                            UsageCount = 150
+                        },
+                        new
+                        {
+                            Id = new Guid("f50aabf1-33e6-400f-bed3-77818f490106"),
+                            TagName = "Programming",
+                            TagUrlSlug = "programming",
+                            UsageCount = 120
+                        },
+                        new
+                        {
+                            Id = new Guid("6e81df6c-7b31-49e2-9bcd-7bd0ea06ef73"),
+                            TagName = "C#",
+                            TagUrlSlug = "c-sharp",
+                            UsageCount = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("d8527f91-f0d6-4804-93d7-37adc7f366ca"),
+                            TagName = "ASP.NET",
+                            TagUrlSlug = "asp-net",
+                            UsageCount = 80
+                        },
+                        new
+                        {
+                            Id = new Guid("802bed34-2e23-492a-a0db-c2ef7d085ff7"),
+                            TagName = "Web Development",
+                            TagUrlSlug = "web-development",
+                            UsageCount = 70
                         });
+                });
+
+            modelBuilder.Entity("BasedProject.Models.BaseEntities.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("PostTag", b =>
@@ -231,6 +533,17 @@ namespace BasedProject.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BasedProject.Models.BaseEntities.Comment", b =>
+                {
+                    b.HasOne("BasedProject.Models.BaseEntities.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("BasedProject.Models.BaseEntities.Post", b =>
                 {
                     b.HasOne("BasedProject.Models.BaseEntities.Category", "Category")
@@ -240,6 +553,57 @@ namespace BasedProject.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("BasedProject.Models.BaseEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("BasedProject.Models.BaseEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BasedProject.Models.BaseEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("BasedProject.Models.BaseEntities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PostTag", b =>
@@ -260,6 +624,11 @@ namespace BasedProject.DataAccess.Migrations
             modelBuilder.Entity("BasedProject.Models.BaseEntities.Category", b =>
                 {
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("BasedProject.Models.BaseEntities.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

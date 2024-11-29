@@ -1,0 +1,18 @@
+﻿@model IEnumerable<BasedProject.Models.BaseEntities.Tag>
+<div class="popular-tags">
+    <h5>Popular Tags</h5>
+    <ul class="list-unstyled">
+        @foreach (var tag in Model)
+        {
+            <li>
+                <a href="@Url.Action("Index", "Post", new { tag = tag.TagUrlSlug })" class="badge bg-secondary">
+                    @tag.TagName
+                </a>
+                @if (tag.UsageCount.HasValue)
+                {
+                    <span class="badge bg-info text-dark">Số lượng kích: @tag.UsageCount.Value</span>
+                }
+            </li>
+        }
+    </ul>
+</div>
