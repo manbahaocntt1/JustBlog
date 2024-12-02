@@ -1,0 +1,27 @@
+﻿@model BasedProject.Models.BaseEntities.Post
+
+@{
+    ViewData["Title"] = "Post Details";
+}
+
+<h1>Post Details</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>Title</th>
+        <td>@Model.Title</td>
+    </tr>
+    <tr>
+        <th>Category</th>
+        <td>@Model.Category?.CategoryName</td>
+    </tr>
+    <tr>
+        <th>Content</th>
+        <td>@Html.Raw(Model.PostContent)</td>
+    </tr>
+    <tr>
+        <th>Published</th>
+        <td>@Model.Published</td>
+    </tr>
+</table>
+
+<a href=@Url.Action("PostManagement","Post" ) class="btn btn-secondary">Back to List</a>

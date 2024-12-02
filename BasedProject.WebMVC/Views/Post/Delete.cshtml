@@ -1,0 +1,14 @@
+﻿@model BasedProject.Models.BaseEntities.Post
+
+<div class="container px-4 px-lg-5">
+    <h1>Delete Post</h1>
+    <p>Are you sure you want to delete the following post?</p>
+    <div class="mb-3">
+        <strong>Title:</strong> @Model.Title
+    </div>
+    <form asp-action="ConfirmDelete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="@Url.Action("PostManagement", "Post")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

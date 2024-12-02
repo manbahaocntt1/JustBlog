@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BasedProject.Models.BaseEntities.Post>
+
+<!-- Main Content -->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Post Management</h1>
+                <!-- Button to create a new post -->
+                <a href="@Url.Action("Create", "PostController")" class="btn btn-primary">Create New Post</a>
+            </div>
+
+            @foreach (var post in Model)
+            {
+                <!-- Post preview -->
+                <div class="post-preview">
+                    <a href="@Url.Action("DetailsPost", "Post", new { id = post.Id })">
+                        <h2 class="post-title">@post.Title</h2>
+                        @if (!string.IsNullOrEmpty(post.ShortDescription))
+                        {
+                            <h3 class="post-subtitle">@post.ShortDescription</h3>
+                        }
+                    </a>
+                    <p class="post-meta">
+                        Posted by
+                        <a href="#!">Author Placeholder</a>
+                        on @post.PostedOn.ToString("MMMM dd, yyyy")
+                    </p>
+                    <!-- Admin controls -->
+                    <div class="mt-3">
+                        <a href="@Url.Action("Edit", "Post", new { id = post.Id })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("Delete", "Post", new { id = post.Id })" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+                <!-- Divider -->
+                <hr class="my-4" />
+            }
+        </div>
+    </div>
+</div>
