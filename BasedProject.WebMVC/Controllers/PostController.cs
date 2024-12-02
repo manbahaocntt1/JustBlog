@@ -29,6 +29,13 @@ namespace BasedProject.WebMVC.Controllers
             return View(posts);
         }
 
+        //Posts management
+        public IActionResult PostManagement()
+        {
+            // Default behavior: display all posts
+            var posts = _postRepository.GetAllPosts();
+            return View(posts);
+        }
 
 
         // Action to display post details
@@ -41,6 +48,17 @@ namespace BasedProject.WebMVC.Controllers
             }
             return View(post);
         }
+        // Action to display post details test for admin functions
+        public ActionResult DetailsPost(Guid id)
+        {
+            var post = _postRepository.FindPost(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            return View(post);
+        }
+
 
 
         // Action to create a new post

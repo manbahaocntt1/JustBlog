@@ -1,0 +1,39 @@
+﻿@model BasedProject.Models.BaseEntities.Post
+
+<div class="container px-4 px-lg-5">
+    <h1>Create New Post</h1>
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="mt-4">
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ShortDescription" class="form-label">Short Description</label>
+            <input asp-for="ShortDescription" class="form-control" />
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PostContent" class="form-label">Content</label>
+            <textarea asp-for="PostContent" id="richTextEditor" class="form-control"></textarea>
+            <span asp-validation-for="PostContent" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Category</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-control"></select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Published" class="form-label">Published</label>
+            <input asp-for="Published" type="checkbox" class="form-check-input" />
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a href="@Url.Action("Index", "Post")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: '#richTextEditor'
+    });
+</script>

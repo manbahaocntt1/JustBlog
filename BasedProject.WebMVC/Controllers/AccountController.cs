@@ -36,6 +36,7 @@ namespace BasedProject.WebMVC.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
+
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
@@ -62,6 +63,7 @@ namespace BasedProject.WebMVC.Controllers
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
+                
                 return RedirectToAction("Index", "Home");
             }
 
@@ -90,5 +92,23 @@ namespace BasedProject.WebMVC.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> Profile()
+        {
+            // Get the currently logged-in user's ID
+            var userId = _userManager.GetUserId(User);
+
+            // Fetch the user from the database using their ID
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+            var roles = await _userManager.GetRolesAsync(user);
+            // Return the user details to the view
+            return View(user);
+        }
+
     }
 }
